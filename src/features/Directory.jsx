@@ -16,6 +16,24 @@ const fmt = (d) => (d ? new Date(d + "T00:00:00").toLocaleDateString(undefined, 
 // Birthday/anniversary usually shown without the year (recurring dates).
 const fmtDay = (d) => (d ? new Date(d + "T00:00:00").toLocaleDateString(undefined, { month: "long", day: "numeric" }) : "");
 
+// Age from a birthday, or null if unknown/invalid.
+function ageFrom(birthday) {
+  if (!birthday) return null;
+  const b = new Date(birthday + "T00:00:00");
+  if (isNaN(b)) return null;
+  const now = new Date();
+  let age = now.getFullYear() - b.getFullYear();
+  const m = now.getMonth() - b.getMonth();
+  if (m < 0 || (m === 0 && now.getDate() < b.getDate())) age--;
+  return age >= 0 && age < 130 ? age : null;
+}
+// Birthday display with age when known, e.g. "April 12 · age 35".
+function birthdayText(birthday) {
+  if (!birthday) return "";
+  const age = ageFrom(birthday);
+  return age == null ? fmtDay(birthday) : `${fmtDay(birthday)} · age ${age}`;
+}
+
 function Detail({ label, value }) {
   if (!value) return null;
   return (
@@ -56,12 +74,23 @@ export default function Directory() {
     }
   };
 
+  const age = ageFrom(form.birthday);
+  const isMinor = age != null && age < 18;
+
   const submit = (e) => {
     e.preventDefault();
-    if (!form.name) return;
-    add(form);
-    setForm(EMPTY);
     setErr("");
+    if (!form.name) return;
+    // Membership presupposes baptism: a member must have a baptism date, on or
+    // before the date they became a member.
+    if (form.joined) {
+      if (!form.baptized) return setErr("Membership requires a baptism date — members are baptized first.");
+      if (form.baptized > form.joined) return setErr("Baptism date must be on or before the membership date.");
+    }
+    // Don't save adult-only fields for a minor.
+    const record = isMinor ? { ...form, anniversary: "" } : form;
+    add(record);
+    setForm(EMPTY);
   };
 
   return (
@@ -82,7 +111,7 @@ export default function Directory() {
                 <div className="cc-muted">{m.role}{m.role && m.email ? " · " : ""}{m.email}</div>
                 <div className="cc-dir-details">
                   <Detail label="Phone" value={m.phone} />
-                  <Detail label="Birthday" value={fmtDay(m.birthday)} />
+                  <Detail label="Birthday" value={birthdayText(m.birthday)} />
                   <Detail label="Anniversary" value={fmtDay(m.anniversary)} />
                   <Detail label="Household" value={m.household} />
                   <Detail label="Address" value={m.address} />
@@ -102,21 +131,32 @@ export default function Directory() {
       {isAdmin && (
         <form className="cc-form" onSubmit={submit}>
           <h3>Add member</h3>
-          <input placeholder="Name" value={form.name} onChange={(e) => set("name", e.target.value)} />
+          <input placeholder="Name (required)" value={form.name} onChange={(e) => set("name", e.target.value)} />
+
+          <p className="cc-muted cc-hint">Everything below is optional — fill in only what applies.</p>
+
           <input placeholder="Role / ministry" value={form.role} onChange={(e) => set("role", e.target.value)} />
           <input placeholder="Email" value={form.email} onChange={(e) => set("email", e.target.value)} />
           <input placeholder="Phone" value={form.phone} onChange={(e) => set("phone", e.target.value)} />
           <input placeholder="Household / family (e.g. spouse & kids)" value={form.household} onChange={(e) => set("household", e.target.value)} />
           <input placeholder="Address" value={form.address} onChange={(e) => set("address", e.target.value)} />
 
-          <label className="cc-muted">Birthday</label>
+          <label className="cc-muted">Birthday{age != null ? ` · age ${age}` : ""}</label>
           <input type="date" value={form.birthday} onChange={(e) => set("birthday", e.target.value)} />
-          <label className="cc-muted">Wedding anniversary</label>
-          <input type="date" value={form.anniversary} onChange={(e) => set("anniversary", e.target.value)} />
-          <label className="cc-muted">Member since</label>
-          <input type="date" value={form.joined} onChange={(e) => set("joined", e.target.value)} />
-          <label className="cc-muted">Baptism date</label>
+
+          {/* Wedding anniversary only makes sense for adults. */}
+          {!isMinor && (
+            <>
+              <label className="cc-muted">Wedding anniversary</label>
+              <input type="date" value={form.anniversary} onChange={(e) => set("anniversary", e.target.value)} />
+            </>
+          )}
+
+          {/* Baptism precedes membership. */}
+          <label className="cc-muted">Baptism date{form.joined ? " (required for members)" : ""}</label>
           <input type="date" value={form.baptized} onChange={(e) => set("baptized", e.target.value)} />
+          <label className="cc-muted">Member since <span className="cc-hint">(requires a baptism date)</span></label>
+          <input type="date" value={form.joined} onChange={(e) => set("joined", e.target.value)} />
 
           <label className="cc-muted">Pastoral notes (visible to admins only)</label>
           <textarea placeholder="Care notes, prayer needs, etc." value={form.notes} onChange={(e) => set("notes", e.target.value)} />
