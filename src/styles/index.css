@@ -1,0 +1,226 @@
+:root {
+  /* Defaults — any of these can be overridden per tenant (theme: {...}). */
+  --cc-primary: #3b5bdb;
+  --cc-accent: #f59f00;
+  --cc-bg: #f8f9fb;
+  --cc-text: #1f2937;
+  --cc-muted: #6b7280;
+  --cc-border: #e5e7eb;
+  --cc-card: #ffffff;
+  --cc-header-bg: #ffffff;
+  --cc-radius: 10px;
+  --cc-font: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; }
+
+.cc-app {
+  font-family: var(--cc-font);
+  color: var(--cc-text);
+  background: var(--cc-bg);
+  min-height: 100vh;
+}
+
+.cc-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1.25rem;
+  background: var(--cc-header-bg);
+  border-bottom: 1px solid var(--cc-border);
+  flex-wrap: wrap;
+}
+.cc-brand { font-weight: 700; color: var(--cc-primary); font-size: 1.1rem; display: flex; align-items: center; gap: 0.5rem; }
+.cc-logo { height: 28px; width: auto; }
+.cc-nav { display: flex; gap: 0.25rem; flex: 1; flex-wrap: wrap; }
+.cc-nav a {
+  text-decoration: none;
+  color: var(--cc-muted);
+  padding: 0.35rem 0.7rem;
+  border-radius: var(--cc-radius);
+  font-size: 0.9rem;
+}
+.cc-nav a.active, .cc-nav a:hover { color: var(--cc-primary); background: rgba(59, 91, 219, 0.08); }
+.cc-user { display: flex; align-items: center; gap: 0.6rem; }
+
+.cc-main { max-width: 860px; margin: 0 auto; padding: 1.5rem 1.25rem; }
+.cc-footer { text-align: center; padding: 1.5rem; font-size: 0.8rem; }
+
+h2 { margin-top: 0; }
+
+.cc-list { list-style: none; padding: 0; display: grid; gap: 0.6rem; }
+.cc-card {
+  background: var(--cc-card);
+  border: 1px solid var(--cc-border);
+  border-radius: var(--cc-radius);
+  padding: 0.9rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+.cc-done { opacity: 0.6; }
+.cc-tile { display: block; }
+.cc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.8rem; }
+
+.cc-form {
+  margin-top: 1.5rem;
+  background: var(--cc-card);
+  border: 1px solid var(--cc-border);
+  border-radius: var(--cc-radius);
+  padding: 1rem;
+  display: grid;
+  gap: 0.6rem;
+  max-width: 460px;
+}
+.cc-form input, .cc-form textarea, .cc-form select {
+  padding: 0.55rem 0.7rem;
+  border: 1px solid var(--cc-border);
+  border-radius: 8px;
+  font: inherit;
+}
+.cc-row { display: flex; gap: 0.4rem; align-items: center; }
+
+.cc-btn {
+  background: var(--cc-primary);
+  color: #fff;
+  border: none;
+  padding: 0.55rem 1rem;
+  border-radius: 8px;
+  font: inherit;
+  cursor: pointer;
+}
+.cc-btn:hover { filter: brightness(0.95); }
+.cc-btn-ghost {
+  background: transparent;
+  border: 1px solid var(--cc-border);
+  padding: 0.4rem 0.7rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  color: var(--cc-muted);
+}
+
+.cc-muted { color: var(--cc-muted); font-size: 0.9rem; }
+.cc-error { color: #e03131; font-size: 0.85rem; }
+.cc-hint { font-size: 0.78rem; }
+
+.cc-signin, .cc-loading {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--cc-bg);
+  font-family: system-ui, sans-serif;
+}
+.cc-signin .cc-form { width: 320px; text-align: center; }
+
+/* Backend-required gate */
+.cc-backend-gate { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: var(--cc-bg); padding: 1.5rem; font-family: system-ui, sans-serif; }
+.cc-backend-card { max-width: 520px; text-align: left; }
+.cc-backend-pre { background: var(--code-bg, #0f172a); color: #e2e8f0; padding: 0.9rem; border-radius: 10px; overflow-x: auto; font-size: 0.82rem; }
+
+/* Create a church */
+.cc-create { min-height: 100vh; background: var(--cc-bg); display: flex; justify-content: center; padding: 2rem 1rem; font-family: system-ui, sans-serif; }
+.cc-create-card { width: 100%; max-width: 520px; text-align: left; }
+.cc-create-card h3 { margin: 1.1rem 0 0.2rem; }
+.cc-color { width: 60px; height: 36px; padding: 0; border: 1px solid var(--cc-border); border-radius: 8px; background: none; cursor: pointer; }
+
+/* Leadership */
+.cc-leader { align-items: flex-start; }
+.cc-grow { flex: 1; }
+.cc-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--cc-primary);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+.cc-bio { margin: 0.4rem 0 0; font-size: 0.9rem; }
+.cc-link { color: var(--cc-primary); font-size: 0.9rem; text-decoration: none; }
+.cc-link:hover { text-decoration: underline; }
+
+/* Meals / potluck */
+.cc-meal { flex-direction: column; align-items: stretch; }
+.cc-meal-head { display: flex; justify-content: space-between; align-items: center; }
+.cc-signups { list-style: none; padding: 0; margin: 0.7rem 0; display: grid; gap: 0.3rem; }
+.cc-signups li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  padding: 0.3rem 0.5rem;
+  background: var(--cc-bg);
+  border-radius: 8px;
+}
+.cc-signup-form { margin-top: 0.3rem; }
+.cc-signup-form input { flex: 1; padding: 0.45rem 0.6rem; border: 1px solid var(--cc-border); border-radius: 8px; font: inherit; }
+
+/* Settings — toggle switch */
+.cc-setting { flex-direction: column; align-items: stretch; }
+.cc-setting-head { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+.cc-switch { display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer; user-select: none; }
+.cc-switch input { position: absolute; opacity: 0; width: 0; height: 0; }
+.cc-slider {
+  position: relative; width: 42px; height: 24px; background: var(--cc-border);
+  border-radius: 999px; transition: background 0.15s; flex-shrink: 0;
+}
+.cc-slider::before {
+  content: ""; position: absolute; top: 3px; left: 3px; width: 18px; height: 18px;
+  background: #fff; border-radius: 50%; transition: transform 0.15s;
+}
+.cc-switch input:checked + .cc-slider { background: var(--cc-primary); }
+.cc-switch input:checked + .cc-slider::before { transform: translateX(18px); }
+.cc-switch-label { font-size: 0.85rem; color: var(--cc-muted); width: 1.8rem; }
+
+.cc-setting-opts {
+  margin-top: 0.9rem; padding-top: 0.9rem; border-top: 1px dashed var(--cc-border);
+  display: grid; gap: 0.6rem;
+}
+.cc-opt-row { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+.cc-opt-row select { padding: 0.35rem 0.5rem; border: 1px solid var(--cc-border); border-radius: 8px; font: inherit; }
+
+/* Section watchers */
+.cc-owners { display: grid; gap: 0.4rem; }
+.cc-owner-chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.cc-chip {
+  display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.85rem;
+  padding: 0.3rem 0.6rem; border: 1px solid var(--cc-border); border-radius: 999px; cursor: pointer;
+}
+.cc-chip input { margin: 0; }
+.cc-chip-on { border-color: var(--cc-primary); background: rgba(59,91,219,0.08); color: var(--cc-primary); }
+.cc-chip-disabled { opacity: 0.45; cursor: not-allowed; }
+.cc-watchers { margin: 0 0 1rem; }
+
+.cc-rename { padding: 0.35rem 0.5rem; border: 1px solid var(--cc-border); border-radius: 8px; font: inherit; min-width: 12rem; }
+.cc-check { display: inline-flex; align-items: center; gap: 0.45rem; font-size: 0.9rem; color: var(--cc-muted); cursor: pointer; }
+.cc-check input { margin: 0; }
+
+/* Password strength meter */
+.cc-strength { display: flex; align-items: center; gap: 0.6rem; }
+.cc-strength-bar { flex: 1; height: 6px; background: var(--cc-border); border-radius: 999px; overflow: hidden; }
+.cc-strength-fill { height: 100%; transition: width 0.2s, background 0.2s; border-radius: 999px; }
+.cc-strength-fill.s0, .cc-strength-fill.s1 { background: #e03131; }
+.cc-strength-fill.s2 { background: #f59f00; }
+.cc-strength-fill.s3 { background: #74b816; }
+.cc-strength-fill.s4 { background: #2b8a3e; }
+.cc-strength-label { font-size: 0.78rem; white-space: nowrap; }
+
+/* Help page */
+.cc-help h3 { margin-top: 1.6rem; }
+.cc-help-item { align-items: flex-start; }
+.cc-help-ico { font-size: 1.5rem; flex-shrink: 0; }
+
+/* My Account */
+.cc-account-summary { align-items: center; }
+.cc-account-msg { margin-top: 0.8rem; color: var(--cc-primary); }
+.cc-user-link { text-decoration: none; }
+.cc-user-link:hover { color: var(--cc-primary); }
+.cc-form label { font-size: 0.8rem; }

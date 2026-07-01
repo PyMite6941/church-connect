@@ -1,0 +1,23 @@
+{
+  "name": "church-connect",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Embeddable, multi-tenant church engagement tool. Drop it on any church's subdomain; accounts and data are configurable per tenant.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build && node scripts/copy-landing.mjs",
+    "build:embed": "vite build --config vite.embed.config.js",
+    "preview": "vite preview",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-router-dom": "^7.6.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.5.0",
+    "vite": "^6.3.0"
+  }
+}

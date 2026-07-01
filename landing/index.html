@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Church Connect — one tool, every church</title>
+  <meta name="description" content="An embeddable, multi-tenant church engagement tool. Connect your church to its own subdomain in minutes." />
+  <style>
+    :root {
+      --primary: #3b5bdb;
+      --accent: #f59f00;
+      --ink: #1f2937;
+      --muted: #6b7280;
+      --bg: #f8f9fb;
+      --card: #ffffff;
+      --border: #e5e7eb;
+      --code-bg: #0f172a;
+      --code-ink: #e2e8f0;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.55;
+    }
+    a { color: var(--primary); }
+    .wrap { max-width: 920px; margin: 0 auto; padding: 0 1.25rem; }
+
+    /* Header */
+    header {
+      position: sticky; top: 0; z-index: 10;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav { display: flex; align-items: center; justify-content: space-between; padding: 0.8rem 0; }
+    .brand { font-weight: 800; color: var(--primary); font-size: 1.15rem; display: flex; align-items: center; gap: 0.5rem; }
+    .brand .dot { width: 22px; height: 22px; border-radius: 6px; background: var(--primary); display: inline-block; }
+    .nav a { text-decoration: none; color: var(--muted); margin-left: 1.1rem; font-size: 0.92rem; }
+    .nav a:hover { color: var(--primary); }
+    .btn {
+      display: inline-block; background: var(--primary); color: #fff; text-decoration: none;
+      padding: 0.6rem 1.1rem; border-radius: 9px; font-weight: 600; font-size: 0.95rem; border: none; cursor: pointer;
+      font-family: inherit; line-height: 1.2;
+    }
+    .btn:hover { filter: brightness(0.95); }
+    .btn-ghost { background: transparent; color: var(--primary); border: 1px solid var(--border); }
+
+    /* Hero */
+    .hero { padding: 4.5rem 0 3rem; text-align: center; }
+    .hero h1 { font-size: clamp(2rem, 5vw, 3.2rem); line-height: 1.1; margin: 0 0 1rem; letter-spacing: -0.02em; }
+    .hero h1 .grad { background: linear-gradient(90deg, var(--primary), var(--accent)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .hero p { font-size: 1.2rem; color: var(--muted); max-width: 620px; margin: 0 auto 2rem; }
+    .hero .cta { display: flex; gap: 0.7rem; justify-content: center; flex-wrap: wrap; }
+    .pill { display: inline-block; background: rgba(59,91,219,0.1); color: var(--primary); font-size: 0.8rem; font-weight: 600; padding: 0.3rem 0.8rem; border-radius: 999px; margin-bottom: 1.2rem; }
+
+    section { padding: 3rem 0; }
+    h2 { font-size: 1.8rem; letter-spacing: -0.01em; margin: 0 0 0.4rem; }
+    .lead { color: var(--muted); margin: 0 0 2rem; }
+
+    /* Functions grid */
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.8rem; }
+    .feat { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 1rem; }
+    .feat .ico { font-size: 1.4rem; }
+    .feat strong { display: block; margin: 0.4rem 0 0.2rem; }
+    .feat span { color: var(--muted); font-size: 0.88rem; }
+    .feat.soon { opacity: 0.7; }
+    .tag { font-size: 0.68rem; background: var(--accent); color: #fff; border-radius: 6px; padding: 0.05rem 0.4rem; vertical-align: middle; margin-left: 0.3rem; }
+
+    /* Steps */
+    .steps { counter-reset: step; display: grid; gap: 1rem; }
+    .step {
+      position: relative; background: var(--card); border: 1px solid var(--border);
+      border-radius: 14px; padding: 1.3rem 1.3rem 1.3rem 4.2rem;
+    }
+    .step::before {
+      counter-increment: step; content: counter(step);
+      position: absolute; left: 1.1rem; top: 1.2rem;
+      width: 2.1rem; height: 2.1rem; border-radius: 50%;
+      background: var(--primary); color: #fff; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .step h3 { margin: 0 0 0.4rem; font-size: 1.1rem; }
+    .step p { margin: 0 0 0.6rem; color: var(--muted); }
+
+    /* Code */
+    pre {
+      background: var(--code-bg); color: var(--code-ink); border-radius: 10px;
+      padding: 1rem; overflow-x: auto; font-size: 0.82rem; margin: 0.5rem 0 0;
+      font-family: "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+    }
+    code { font-family: "SF Mono", ui-monospace, Menlo, Consolas, monospace; }
+    .inline-code { background: #eef0f4; border-radius: 5px; padding: 0.1rem 0.4rem; font-size: 0.85em; }
+    table.dns { width: 100%; border-collapse: collapse; margin-top: 0.6rem; font-size: 0.88rem; }
+    table.dns th, table.dns td { text-align: left; padding: 0.45rem 0.6rem; border: 1px solid var(--border); }
+    table.dns th { background: var(--bg); }
+
+    /* Modes */
+    .two { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    @media (max-width: 640px) { .two { grid-template-columns: 1fr; } }
+    .mode { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.3rem; }
+    .mode h3 { margin: 0 0 0.3rem; }
+
+    footer { border-top: 1px solid var(--border); padding: 2rem 0; color: var(--muted); font-size: 0.88rem; text-align: center; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap nav">
+      <div class="brand"><span class="dot"></span> Church Connect</div>
+      <nav>
+        <a href="#functions">Functions</a>
+        <a href="#setup">Setup</a>
+        <a href="#deploy">Deploy</a>
+        <a class="btn" href="/demo/create">Get started</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <div class="hero wrap">
+    <span class="pill">One build · every church · your subdomain</span>
+    <h1>Your church, <span class="grad">connected</span>.</h1>
+    <p>
+      An embeddable, multi-tenant engagement hub. Pick your functions, match your
+      brand, and go live on your own subdomain — <strong>connect.yourchurch.org</strong> —
+      in minutes. No per-church rebuild.
+    </p>
+    <div class="cta">
+      <a class="btn" href="/demo/create">Create your church — free</a>
+      <a class="btn btn-ghost" href="/demo/?tenant=grace-community">Try the live demo →</a>
+    </div>
+  </div>
+
+  <!-- FUNCTIONS -->
+  <section id="functions" class="wrap">
+    <h2>Choose your functions</h2>
+    <p class="lead">Every church turns on only what it needs — and can rename anything.</p>
+    <div class="grid">
+      <div class="feat"><div class="ico">📅</div><strong>Events</strong><span>Service times, gatherings, calendar.</span></div>
+      <div class="feat"><div class="ico">📣</div><strong>Announcements</strong><span>Pinned notices for the congregation.</span></div>
+      <div class="feat"><div class="ico">🎧</div><strong>Sermons</strong><span>Media library with watch/listen links.</span></div>
+      <div class="feat"><div class="ico">🙏</div><strong>Prayer</strong><span>Submit & track answered requests.</span></div>
+      <div class="feat"><div class="ico">👥</div><strong>Leadership</strong><span>Pastors, elders, ministry leaders.</span></div>
+      <div class="feat"><div class="ico">🌱</div><strong>Small Groups</strong><span>Browsable groups & contacts.</span></div>
+      <div class="feat"><div class="ico">🍽️</div><strong>Meals</strong><span>Potluck & lunch dish sign-ups.</span></div>
+      <div class="feat"><div class="ico">📖</div><strong>Directory</strong><span>Member & ministry directory.</span></div>
+      <div class="feat"><div class="ico">💝</div><strong>Giving</strong><span>Link to your online giving.</span></div>
+      <div class="feat soon"><div class="ico">🤝</div><strong>Serve / Volunteer<span class="tag">soon</span></strong><span>Role slots people claim.</span></div>
+      <div class="feat soon"><div class="ico">📎</div><strong>Resources<span class="tag">soon</span></strong><span>Bulletins, forms, downloads.</span></div>
+      <div class="feat soon"><div class="ico">✋</div><strong>Connect Card<span class="tag">soon</span></strong><span>"New here?" visitor form.</span></div>
+    </div>
+  </section>
+
+  <!-- SETUP STEPS -->
+  <section id="setup" style="background:#fff; border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
+    <div class="wrap">
+      <h2>Connect your church in 5 steps</h2>
+      <p class="lead">Stand up your own instance and point it at your subdomain.</p>
+
+      <div class="steps">
+        <!-- 1 -->
+        <div class="step">
+          <h3>Add your church</h3>
+          <p>Create a tenant entry — name, accounts, and which functions you offer. This is the only "config" a church needs.</p>
+          <pre><code>// src/config/tenants.js
+"yourchurch": {
+  id: "yourchurch",
+  name: "Your Church",
+  tagline: "Welcome home.",
+  features: ["events", "sermons", "prayer", "leadership", "groups", "meals", "giving"],
+  accounts: [
+    { id: "u-admin", name: "Pastor", email: "pastor@yourchurch.org",
+      role: "admin", pin: "1234" }
+  ],
+}</code></pre>
+        </div>
+
+        <!-- 2 -->
+        <div class="step">
+          <h3>Make it yours</h3>
+          <p>Match your brand. Every value is optional — set only what you want to change. Rename functions with <span class="inline-code">featureLabels</span>.</p>
+          <pre><code>theme: {
+  primary: "#2b8a3e",     // buttons, links, accents
+  accent:  "#e8590c",
+  font:    "Georgia, serif",
+  radius:  "16px",
+},
+featureLabels: { meals: "Potlucks" },
+logoUrl: "https://yourchurch.org/logo.png",</code></pre>
+        </div>
+
+        <!-- 3 -->
+        <div class="step">
+          <h3>Deploy the app</h3>
+          <p>Push to any static host (Vercel, Netlify, Cloudflare Pages). One build serves every church.</p>
+          <pre><code>npm install
+npm run build      # -> dist/   (deploy this folder)</code></pre>
+        </div>
+
+        <!-- 4 -->
+        <div class="step">
+          <h3>Point your subdomain</h3>
+          <p>Add a <strong>CNAME</strong> record at your DNS provider, then attach the domain in your host. Church Connect reads the subdomain and loads the matching tenant automatically.</p>
+          <table class="dns">
+            <tr><th>Type</th><th>Name</th><th>Value</th></tr>
+            <tr><td>CNAME</td><td><code>connect</code></td><td><code>cname.vercel-dns.com</code></td></tr>
+          </table>
+          <pre><code># Result: connect.yourchurch.org  ->  tenant "yourchurch"
+# (subdomain label is matched to the tenant id)</code></pre>
+        </div>
+
+        <!-- 5 -->
+        <div class="step">
+          <h3>Go live & invite your team</h3>
+          <p>Share the URL. Admins sign in and manage everything from the UI — accounts on the <strong>Accounts</strong> page, content on each function page. Members get their own <strong>My Account</strong> page.</p>
+          <pre><code>https://connect.yourchurch.org   ✅ live</code></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEPLOY MODES -->
+  <section id="deploy" class="wrap">
+    <h2>Two ways to run it</h2>
+    <p class="lead">Host it as a full site, or embed it inside your existing website.</p>
+    <div class="two">
+      <div class="mode">
+        <h3>① Standalone subdomain</h3>
+        <p class="lead">The full app on <code>connect.yourchurch.org</code>. Best if you don't already have a site.</p>
+        <pre><code>npm run build        # -> dist/
+# deploy dist/ + point the CNAME (steps above)</code></pre>
+      </div>
+      <div class="mode">
+        <h3>② Embed widget</h3>
+        <p class="lead">Drop it into a page on your current website — no subdomain needed.</p>
+        <pre><code>npm run build:embed  # -> church-connect.js
+
+&lt;div id="church-connect" data-tenant="yourchurch"&gt;&lt;/div&gt;
+&lt;script src="https://cdn.yoursite/church-connect.js"&gt;&lt;/script&gt;</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- DATA -->
+  <section class="wrap" style="padding-top:0;">
+    <div class="mode">
+      <h3>Where does the data live?</h3>
+      <p class="lead" style="margin-bottom:0.6rem;">
+        Out of the box, everything runs on the browser's local storage — zero
+        backend, perfect for trying it out. When you're ready for shared,
+        persistent data, set one env var and point it at your API:
+      </p>
+      <pre><code>VITE_API_BASE_URL=https://api.yourchurch.org
+# Church Connect then GET/PUTs each collection at /{tenant}/{collection}</code></pre>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      Church Connect — a general engagement tool any church can host. ·
+      <a href="#setup">Get started</a>
+    </div>
+  </footer>
+</body>
+</html>
