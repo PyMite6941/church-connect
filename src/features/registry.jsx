@@ -32,6 +32,8 @@ export const FEATURES = {
   events: {
     label: "Events", icon: "📅", component: Events,
     options: [{ key: "sort", label: "Order events by", choices: SORT_DATE, default: "soonest" }],
+    // Who may ADD events — a role category, or specific selected people.
+    permission: { label: "Who can add events", default: { mode: "role", role: "admins" } },
   },
   announcements: {
     label: "Announcements", icon: "📣", component: Announcements,

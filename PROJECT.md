@@ -3,6 +3,15 @@
 Central work doc for `portfolio/church-connect/`. (User-facing usage lives in
 `README.md`; this file is the build/architecture log.)
 
+## Repo & hosting
+- **GitHub: https://github.com/PyMite6941/church-connect** (public, pushed 2026-06-30).
+- Vercel: config ready (homepage `/` + demo `/demo`); import the repo in Vercel to deploy.
+
+## Update — 2026-06-30 (directory photos)
+- Directory entries take an optional **photo** (file picker → downscaled JPEG data
+  URL via `utils/image.js`, stored inline in the data layer; initial-avatar
+  fallback). No separate file host needed.
+
 ## Known issues / TODO
 - [x] Landing "Get started" button bad font — fixed (`font-family: inherit` on `.btn`).
 - [ ] Custom tenants (Create-a-Church) persist to localStorage only; move to

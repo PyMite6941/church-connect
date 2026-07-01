@@ -1,13 +1,15 @@
 import { useState } from "react";
 import { useCollection } from "../context/DataContext";
 import { useAuth } from "../context/AuthContext";
-import { useFeatureOption } from "../context/SettingsContext";
+import { useFeatureOption, useFeaturePermission } from "../context/SettingsContext";
 import SectionWatchers from "../components/SectionWatchers";
 
 export default function Events() {
   const { items, loading, add, remove } = useCollection("events");
-  const { isAdmin } = useAuth();
+  const { isAdmin, canByPermission } = useAuth();
   const sort = useFeatureOption("events", "sort", "soonest");
+  const addPerm = useFeaturePermission("events", { mode: "role", role: "admins" });
+  const canAdd = canByPermission(addPerm);
   const [form, setForm] = useState({ title: "", date: "", time: "", location: "" });
 
   if (loading) return <p className="cc-muted">Loading events…</p>;
@@ -45,7 +47,7 @@ export default function Events() {
         {items.length === 0 && <li className="cc-muted">No events yet.</li>}
       </ul>
 
-      {isAdmin && (
+      {canAdd && (
         <form className="cc-form" onSubmit={submit}>
           <h3>Add event</h3>
           <input placeholder="Title" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} />

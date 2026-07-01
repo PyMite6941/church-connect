@@ -28,6 +28,7 @@ export function SettingsProvider({ tenantId, children }) {
           featureOptions: {},
           featureOwners: {},
           featureLabels: {},
+          featurePermissions: {},
           customChannels: [],
           requirePassword: true,
           allowAnonymous: true,
@@ -115,6 +116,14 @@ export function SettingsProvider({ tenantId, children }) {
   const getFeatureOption = (featureKey, optKey) =>
     settings?.featureOptions?.[featureKey]?.[optKey];
 
+  // Per-feature "who can add" permission ({ mode:'role'|'users', role, users }).
+  const getPermission = (featureKey, fallback) =>
+    settings?.featurePermissions?.[featureKey] ?? fallback;
+  const setPermission = (featureKey, perm) => {
+    const featurePermissions = { ...(settings.featurePermissions || {}), [featureKey]: perm };
+    persist({ ...settings, featurePermissions });
+  };
+
   // Resolve a channel's display label: settings rename > supplied fallback.
   const channelLabel = (key, fallback) => {
     const override = settings?.featureLabels?.[key];
@@ -138,6 +147,8 @@ export function SettingsProvider({ tenantId, children }) {
         toggleFeature,
         setFeatureOption,
         getFeatureOption,
+        getPermission,
+        setPermission,
         setRequirePassword,
         setAllowAnonymous,
         setChannelLabel,
@@ -165,4 +176,10 @@ export function useFeatureOption(featureKey, optKey, fallback) {
   const { getFeatureOption } = useSettings();
   const v = getFeatureOption(featureKey, optKey);
   return v == null ? fallback : v;
+}
+
+// Returns the feature's "who can add" permission, or the supplied fallback.
+export function useFeaturePermission(featureKey, fallback) {
+  const { getPermission } = useSettings();
+  return getPermission(featureKey, fallback);
 }

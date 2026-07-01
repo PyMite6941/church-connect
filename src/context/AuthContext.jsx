@@ -81,9 +81,21 @@ export function AuthProvider({ tenantId, children }) {
   const canContribute = (policy = "members") =>
     isAdmin || (role === "member" && policy === "members");
 
+  // Rich permission check: a role category, or a specific list of people.
+  // Admins can always do it. Shape: { mode: 'role'|'users', role, users:[ids] }.
+  const canByPermission = (perm) => {
+    if (!user) return false;
+    if (isAdmin) return true;
+    if (!perm) return false;
+    if (perm.mode === "users") return (perm.users || []).includes(user.id);
+    if (perm.role === "everyone") return true;
+    if (perm.role === "members") return role === "member";
+    return false; // admins only
+  };
+
   return (
     <AuthContext.Provider
-      value={{ user, role, isAdmin, canContribute, ready, accounts, saveAccounts, signIn, signOut, updateProfile }}
+      value={{ user, role, isAdmin, canContribute, canByPermission, ready, accounts, saveAccounts, signIn, signOut, updateProfile }}
     >
       {children}
     </AuthContext.Provider>

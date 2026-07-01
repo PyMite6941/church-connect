@@ -27,6 +27,60 @@ export default function Settings() {
     </label>
   );
 
+  const ROLE_CHOICES = [
+    { value: "admins", label: "Admins only" },
+    { value: "members", label: "Members & admins" },
+    { value: "everyone", label: "Everyone signed in" },
+  ];
+
+  // Editor for a feature's "who can add" permission: a role category OR a
+  // specific set of people.
+  const Permission = ({ featureKey, spec }) => {
+    const perm = s.getPermission(featureKey, spec.default);
+    const setMode = (mode) =>
+      s.setPermission(featureKey, mode === "users" ? { mode: "users", users: perm.users || [] } : { mode: "role", role: perm.role || "admins" });
+    const setRole = (role) => s.setPermission(featureKey, { mode: "role", role });
+    const toggleUser = (id) => {
+      const users = new Set(perm.users || []);
+      users.has(id) ? users.delete(id) : users.add(id);
+      s.setPermission(featureKey, { mode: "users", users: [...users] });
+    };
+    return (
+      <div className="cc-perm">
+        <label className="cc-opt-row">
+          <span className="cc-muted">{spec.label}</span>
+          <select value={perm.mode} onChange={(e) => setMode(e.target.value)}>
+            <option value="role">A category of people</option>
+            <option value="users">Specific people</option>
+          </select>
+        </label>
+        {perm.mode === "role" ? (
+          <label className="cc-opt-row">
+            <span className="cc-muted">Which category</span>
+            <select value={perm.role || "admins"} onChange={(e) => setRole(e.target.value)}>
+              {ROLE_CHOICES.map((c) => (<option key={c.value} value={c.value}>{c.label}</option>))}
+            </select>
+          </label>
+        ) : (
+          <div className="cc-owners">
+            <div className="cc-muted">Choose who can add (admins always can):</div>
+            <div className="cc-owner-chips">
+              {accounts.map((a) => {
+                const checked = (perm.users || []).includes(a.id);
+                return (
+                  <label key={a.id} className={`cc-chip ${checked ? "cc-chip-on" : ""}`}>
+                    <input type="checkbox" checked={checked} onChange={() => toggleUser(a.id)} />
+                    {a.name}
+                  </label>
+                );
+              })}
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  };
+
   const Watchers = ({ featureKey }) => {
     const owners = s.getFeatureOwners(featureKey);
     return (
@@ -111,6 +165,7 @@ export default function Settings() {
                       </label>
                     );
                   })}
+                  {feat.permission && <Permission featureKey={key} spec={feat.permission} />}
                   <Watchers featureKey={key} />
                 </div>
               )}
