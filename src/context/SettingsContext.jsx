@@ -32,6 +32,7 @@ export function SettingsProvider({ tenantId, children }) {
           customChannels: [],
           requirePassword: true,
           allowAnonymous: true,
+          viewerAccess: "on", // "on" | "off" | "selective"
         };
         await adapter.saveCollection(tenantId, "settings", s);
       }
@@ -68,6 +69,7 @@ export function SettingsProvider({ tenantId, children }) {
   // Church-wide toggles.
   const setRequirePassword = (on) => persist({ ...settings, requirePassword: on });
   const setAllowAnonymous = (on) => persist({ ...settings, allowAnonymous: on });
+  const setViewerAccess = (mode) => persist({ ...settings, viewerAccess: mode });
 
   // Rename any channel (built-in or custom). Empty string clears the override.
   const setChannelLabel = (key, label) => {
@@ -142,6 +144,7 @@ export function SettingsProvider({ tenantId, children }) {
         customChannels: settings?.customChannels || [],
         requirePassword: settings?.requirePassword !== false,
         allowAnonymous: settings?.allowAnonymous !== false,
+        viewerAccess: settings?.viewerAccess || "on",
         maxOwners: MAX_OWNERS,
         isEnabled,
         toggleFeature,
@@ -151,6 +154,7 @@ export function SettingsProvider({ tenantId, children }) {
         setPermission,
         setRequirePassword,
         setAllowAnonymous,
+        setViewerAccess,
         setChannelLabel,
         channelLabel,
         addCustomChannel,

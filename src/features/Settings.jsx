@@ -130,6 +130,22 @@ export default function Settings() {
           <Toggle checked={s.allowAnonymous} onChange={s.setAllowAnonymous} />
         </div>
       </div>
+      <div className="cc-card cc-setting">
+        <div className="cc-setting-head cc-opt-row">
+          <div className="cc-grow">
+            <strong>👀 Visitor access</strong>
+            <div className="cc-muted">
+              Who beyond your members/admins may view the site. Selective = only
+              visitors you approve (set per account on the Accounts page).
+            </div>
+          </div>
+          <select value={s.viewerAccess} onChange={(e) => s.setViewerAccess(e.target.value)}>
+            <option value="on">On — visitors allowed</option>
+            <option value="off">Off — members & admins only</option>
+            <option value="selective">Selective — approved visitors only</option>
+          </select>
+        </div>
+      </div>
 
       {/* Built-in features */}
       <h3>Features <span className="cc-muted">({enabledCount} of {ALL_FEATURE_KEYS.length} on)</span></h3>

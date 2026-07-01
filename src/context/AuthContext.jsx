@@ -12,7 +12,7 @@ const adapter = createAdapter();
 // magic link / your API) by replacing signIn + the accounts source.
 export function AuthProvider({ tenantId, children }) {
   const tenant = useTenant();
-  const { requirePassword } = useSettings();
+  const { requirePassword, viewerAccess } = useSettings();
   const [accounts, setAccounts] = useState([]);
   const [user, setUser] = useState(null);
   const [ready, setReady] = useState(false);
@@ -52,6 +52,14 @@ export function AuthProvider({ tenantId, children }) {
     if (needsPassword) {
       if (!account.pin) return { ok: false, error: "This admin account has no password set. Ask another admin to set one." };
       if (account.pin !== pin) return { ok: false, error: "Incorrect password." };
+    }
+
+    // Viewer (visitor) access is controlled church-wide: on / off / selective.
+    if (account.role === "viewer") {
+      if (viewerAccess === "off")
+        return { ok: false, error: "Visitor access is currently turned off for this church." };
+      if (viewerAccess === "selective" && !account.approved)
+        return { ok: false, error: "Your visitor access hasn't been approved yet." };
     }
 
     setUser(account);

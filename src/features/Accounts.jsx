@@ -28,6 +28,9 @@ export default function Accounts() {
   const setRole = (id, role) =>
     saveAccounts(accounts.map((a) => (a.id === id ? { ...a, role } : a)));
 
+  const setApproved = (id, approved) =>
+    saveAccounts(accounts.map((a) => (a.id === id ? { ...a, approved } : a)));
+
   const removeAccount = (id) => saveAccounts(accounts.filter((a) => a.id !== id));
 
   return (
@@ -46,6 +49,12 @@ export default function Accounts() {
               <div className="cc-muted">{a.email}</div>
             </div>
             <div className="cc-row">
+              {a.role === "viewer" && (
+                <label className="cc-check" title="Approve this visitor (used when Visitor access is Selective)">
+                  <input type="checkbox" checked={!!a.approved} onChange={(e) => setApproved(a.id, e.target.checked)} />
+                  Approved
+                </label>
+              )}
               <select value={a.role} onChange={(e) => setRole(a.id, e.target.value)}>
                 <option value="viewer">viewer</option>
                 <option value="member">member</option>

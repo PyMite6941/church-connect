@@ -27,9 +27,9 @@ const HELP = {
 };
 
 const ROLES = [
-  ["Admin", "Full control — can edit every page, manage accounts, and change settings. Give this to pastors or staff who run the app."],
-  ["Member", "Can take part — submit prayer requests, sign up for meals, and view everything. Most of your congregation will be members."],
-  ["Viewer", "Read-only — can see the pages but not post or sign up. Good for the wider public, or people you want to keep informed without letting them contribute."],
+  ["Admin", "Delegated leaders — pastors or staff you appoint. Full control: edit every page, manage accounts, and change settings."],
+  ["Member", "Everyone in your church who isn't an admin — the people in your directory. They can take part: submit prayer requests, sign up for meals, and view everything."],
+  ["Viewer (visitor)", "Everyone else — guests and the wider public. Read-only. You control visitor access church-wide in Settings: On (visitors allowed), Off (members & admins only), or Selective (only visitors you approve on the Accounts page)."],
 ];
 
 export default function Help() {
