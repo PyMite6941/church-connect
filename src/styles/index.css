@@ -129,6 +129,54 @@ h2 { margin-top: 0; }
   letter-spacing: 0.02em;
 }
 
+/* Text scaling — scales all rem-based sizing. */
+html.cc-text-large { font-size: 112.5%; }
+html.cc-text-larger { font-size: 131.25%; }
+
+/* Dark mode — !important beats the per-tenant inline theme variables. */
+.cc-dark {
+  --cc-bg: #0f172a !important;
+  --cc-text: #e2e8f0 !important;
+  --cc-muted: #94a3b8 !important;
+  --cc-border: #334155 !important;
+  --cc-card: #1e293b !important;
+  --cc-header-bg: #1e293b !important;
+}
+
+/* High contrast — maximize legibility; underline links so color isn't the only cue. */
+.cc-contrast {
+  --cc-bg: #ffffff !important;
+  --cc-text: #000000 !important;
+  --cc-muted: #1a1a1a !important;
+  --cc-border: #000000 !important;
+  --cc-card: #ffffff !important;
+  --cc-header-bg: #ffffff !important;
+  --cc-primary: #0000cc !important;
+}
+.cc-contrast a, .cc-contrast .cc-link, .cc-contrast .cc-nav a.active { text-decoration: underline; }
+.cc-contrast .cc-card, .cc-contrast .cc-form input, .cc-contrast .cc-form textarea, .cc-contrast .cc-form select { border-width: 2px; }
+
+/* Roomy line & letter spacing — helps dyslexic readers. */
+.cc-roomy, .cc-roomy p, .cc-roomy li, .cc-roomy .cc-muted { line-height: 1.9 !important; }
+.cc-roomy * { letter-spacing: 0.03em; word-spacing: 0.08em; }
+
+/* Visible keyboard focus — helps keyboard & screen-reader users. */
+:focus-visible { outline: 3px solid var(--cc-primary); outline-offset: 2px; border-radius: 4px; }
+
+/* Skip-to-content link — hidden until focused. */
+.cc-skip {
+  position: absolute; left: 0; top: -60px; z-index: 100;
+  background: var(--cc-primary); color: #fff; padding: 0.6rem 1rem;
+  text-decoration: none; border-radius: 0 0 8px 0; transition: top 0.15s;
+}
+.cc-skip:focus { top: 0; }
+
+/* Reduce motion — user toggle OR the OS-level preference. */
+.cc-reduce-motion *, .cc-reduce-motion { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
+}
+
 /* Backend-required gate */
 .cc-backend-gate { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: var(--cc-bg); padding: 1.5rem; font-family: system-ui, sans-serif; }
 .cc-backend-card { max-width: 520px; text-align: left; }

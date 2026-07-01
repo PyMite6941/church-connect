@@ -4,6 +4,7 @@ import { useAuth } from "../context/AuthContext";
 import { useSettings } from "../context/SettingsContext";
 import { useI18n } from "../context/LanguageContext";
 import { getActiveChannels } from "../features/channels";
+import ReadAloud from "./ReadAloud";
 
 export default function Layout({ children }) {
   const tenant = useTenant();
@@ -15,12 +16,13 @@ export default function Layout({ children }) {
 
   return (
     <div className="cc-app">
+      <a href="#cc-main" className="cc-skip">{t("skipToContent")}</a>
       <header className="cc-header">
         <div className="cc-brand">
           {tenant.logoUrl && <img className="cc-logo" src={tenant.logoUrl} alt="" />}
           {tenant.name}
         </div>
-        <nav className="cc-nav">
+        <nav className="cc-nav" aria-label="Main">
           <NavLink to="/" end>{t("home")}</NavLink>
           {channels.map((ch) => (
             <NavLink key={ch.key} to={`/${ch.key}`}>
@@ -33,13 +35,14 @@ export default function Layout({ children }) {
           {isAdmin && <NavLink to="/accounts">{t("accounts")}</NavLink>}
         </nav>
         <div className="cc-user">
+          <ReadAloud />
           <NavLink to="/account" className="cc-user-link" title={t("myAccount")}>
             {user.name}{isAdmin ? " (admin)" : ""}
           </NavLink>
           <button className="cc-btn-ghost" onClick={signOut}>{t("signOut")}</button>
         </div>
       </header>
-      <main className="cc-main">{children}</main>
+      <main className="cc-main" id="cc-main">{children}</main>
       <footer className="cc-footer cc-muted">
         {tenant.footerText || "Powered by Church Connect"}
       </footer>

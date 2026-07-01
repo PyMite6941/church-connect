@@ -21,10 +21,17 @@ export function LanguageProvider({ children }) {
     document.documentElement.dir = RTL_LANGS.includes(lang) ? "rtl" : "ltr";
   }, [lang]);
 
-  // Dyslexia-friendly font — per-user accessibility preference.
+  // Per-user accessibility preferences, applied as classes on <html>.
   useEffect(() => {
-    document.documentElement.classList.toggle("cc-dyslexic", !!user?.dyslexiaFont);
-  }, [user?.dyslexiaFont]);
+    const cl = document.documentElement.classList;
+    cl.toggle("cc-dyslexic", !!user?.dyslexiaFont);
+    cl.toggle("cc-text-large", user?.textScale === "large");
+    cl.toggle("cc-text-larger", user?.textScale === "larger");
+    cl.toggle("cc-dark", user?.display === "dark");
+    cl.toggle("cc-contrast", user?.display === "contrast");
+    cl.toggle("cc-roomy", !!user?.roomyText);
+    cl.toggle("cc-reduce-motion", !!user?.reduceMotion);
+  }, [user?.dyslexiaFont, user?.textScale, user?.display, user?.roomyText, user?.reduceMotion]);
 
   // Persist the choice on the user's account.
   const setLang = (code) => updateProfile({ lang: code });

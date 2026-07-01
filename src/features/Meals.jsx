@@ -82,7 +82,7 @@ function MealCard({ meal, user, isAdmin, canSignup, canAnon, update, remove }) {
           <li key={i}>
             <span><strong>{s.name}</strong> — {s.dish}</span>
             {(isAdmin || s.name === user?.name) && (
-              <button className="cc-btn-ghost" onClick={() => removeSignup(i)}>✕</button>
+              <button className="cc-btn-ghost" onClick={() => removeSignup(i)} aria-label="Remove">✕</button>
             )}
           </li>
         ))}

@@ -66,13 +66,36 @@ export default function MyAccount() {
       {/* Accessibility — per-user preferences. */}
       <div className="cc-form">
         <h3>{t("accessibility")}</h3>
+
+        <label className="cc-opt-row">
+          <span className="cc-muted">{t("textSize")}</span>
+          <select value={user.textScale || "normal"} onChange={(e) => updateProfile({ textScale: e.target.value })}>
+            <option value="normal">{t("sizeNormal")}</option>
+            <option value="large">{t("sizeLarge")}</option>
+            <option value="larger">{t("sizeLarger")}</option>
+          </select>
+        </label>
+
+        <label className="cc-opt-row">
+          <span className="cc-muted">{t("display")}</span>
+          <select value={user.display || "normal"} onChange={(e) => updateProfile({ display: e.target.value })}>
+            <option value="normal">{t("displayNormal")}</option>
+            <option value="dark">{t("darkMode")}</option>
+            <option value="contrast">{t("highContrast")}</option>
+          </select>
+        </label>
+
         <label className="cc-check">
-          <input
-            type="checkbox"
-            checked={!!user.dyslexiaFont}
-            onChange={(e) => updateProfile({ dyslexiaFont: e.target.checked })}
-          />
+          <input type="checkbox" checked={!!user.dyslexiaFont} onChange={(e) => updateProfile({ dyslexiaFont: e.target.checked })} />
           {t("dyslexiaFont")}
+        </label>
+        <label className="cc-check">
+          <input type="checkbox" checked={!!user.roomyText} onChange={(e) => updateProfile({ roomyText: e.target.checked })} />
+          {t("roomyText")}
+        </label>
+        <label className="cc-check">
+          <input type="checkbox" checked={!!user.reduceMotion} onChange={(e) => updateProfile({ reduceMotion: e.target.checked })} />
+          {t("reduceMotion")}
         </label>
       </div>
 

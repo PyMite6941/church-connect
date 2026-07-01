@@ -51,7 +51,7 @@ export default function Directory() {
           <li key={m.id} className="cc-card">
             <div className="cc-dir-person">
               {m.photo ? (
-                <img className="cc-dir-photo" src={m.photo} alt="" />
+                <img className="cc-dir-photo" src={m.photo} alt={m.name} />
               ) : (
                 <div className="cc-avatar" aria-hidden>{m.name?.[0] || "?"}</div>
               )}

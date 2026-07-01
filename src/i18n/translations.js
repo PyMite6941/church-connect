@@ -39,6 +39,10 @@ export const translations = {
     confirmPassword: "Confirm new password", updatePassword: "Update password",
     session: "Session", administrator: "Administrator", member: "Member", viewer: "Viewer",
     accessibility: "Accessibility", dyslexiaFont: "Dyslexia-friendly font",
+    textSize: "Text size", sizeNormal: "Normal", sizeLarge: "Large", sizeLarger: "Larger",
+    display: "Display", displayNormal: "Normal", darkMode: "Dark", highContrast: "High contrast",
+    roomyText: "Roomy line & letter spacing", reduceMotion: "Reduce motion",
+    readAloud: "Read this page aloud", stopReading: "Stop reading", skipToContent: "Skip to content",
   },
   es: {
     home: "Inicio", help: "Ayuda", myAccount: "Mi cuenta", settings: "Configuración", accounts: "Cuentas",
