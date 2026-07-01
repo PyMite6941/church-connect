@@ -9,7 +9,7 @@
 //   • Any REST:  VITE_API_BASE_URL                            (GET/PUT /{tenant}/{name})
 // For local demos only, set VITE_ALLOW_LOCAL=true to fall back to localStorage.
 
-export const STORAGE_VERSION = "v2";
+export const STORAGE_VERSION = "v3";
 
 const SUPA_URL = import.meta.env?.VITE_SUPABASE_URL;
 const SUPA_KEY = import.meta.env?.VITE_SUPABASE_ANON_KEY;

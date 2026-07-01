@@ -115,6 +115,8 @@ h2 { margin-top: 0; }
   font-family: system-ui, sans-serif;
 }
 .cc-signin .cc-form { width: 320px; text-align: center; }
+.cc-demo-logins { display: flex; align-items: center; justify-content: center; gap: 0.4rem; flex-wrap: wrap; }
+.cc-demo-logins .cc-muted { width: 100%; }
 
 /* Backend-required gate */
 .cc-backend-gate { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: var(--cc-bg); padding: 1.5rem; font-family: system-ui, sans-serif; }

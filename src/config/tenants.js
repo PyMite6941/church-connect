@@ -29,7 +29,8 @@ export const TENANTS = {
     showIcons: true,
     accounts: [
       { id: "u-admin", name: "Grace Church", username: "GraceChurch", email: "dan@grace.org", role: "admin", pin: "John3:16!!" },
-      { id: "u-member", name: "Maria Lopez", email: "maria@grace.org", role: "member", pin: "0000" },
+      { id: "u-member", name: "Maria Lopez", username: "Member", email: "maria@grace.org", role: "member", pin: "0000" },
+      { id: "u-viewer", name: "Sam Visitor", username: "Visitor", email: "visitor@grace.org", role: "viewer", pin: "0000" },
     ],
   },
   "riverside-chapel": {

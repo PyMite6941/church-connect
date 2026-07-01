@@ -19,6 +19,12 @@ export default function SignIn() {
     if (!res.ok) setError(res.error);
   };
 
+  // One-click demo sign-in for the sample church.
+  const quick = (idv, pw) => {
+    const res = signIn(idv, pw);
+    if (!res.ok) setError(res.error);
+  };
+
   return (
     <div className="cc-signin">
       <form className="cc-form cc-card" onSubmit={submit}>
@@ -33,7 +39,14 @@ export default function SignIn() {
         )}
         {error && <p className="cc-error">{error}</p>}
         <button className="cc-btn" type="submit">{t("signIn")}</button>
-        <p className="cc-muted cc-hint">Demo admin: GraceChurch / John3:16!!</p>
+        {tenant.id === "grace-community" && (
+          <div className="cc-demo-logins cc-hint">
+            <div className="cc-muted">Try a demo view:</div>
+            <button type="button" className="cc-btn-ghost" onClick={() => quick("GraceChurch", "John3:16!!")}>Admin</button>
+            <button type="button" className="cc-btn-ghost" onClick={() => quick("Member", "0000")}>Member</button>
+            <button type="button" className="cc-btn-ghost" onClick={() => quick("Visitor", "0000")}>Visitor</button>
+          </div>
+        )}
         <p className="cc-muted cc-hint">Starting a new church? <a href={`${import.meta.env.BASE_URL}create`}>Create one →</a></p>
       </form>
     </div>
