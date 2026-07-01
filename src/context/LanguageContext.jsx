@@ -21,6 +21,11 @@ export function LanguageProvider({ children }) {
     document.documentElement.dir = RTL_LANGS.includes(lang) ? "rtl" : "ltr";
   }, [lang]);
 
+  // Dyslexia-friendly font — per-user accessibility preference.
+  useEffect(() => {
+    document.documentElement.classList.toggle("cc-dyslexic", !!user?.dyslexiaFont);
+  }, [user?.dyslexiaFont]);
+
   // Persist the choice on the user's account.
   const setLang = (code) => updateProfile({ lang: code });
 

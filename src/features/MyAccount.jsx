@@ -63,6 +63,19 @@ export default function MyAccount() {
         </select>
       </div>
 
+      {/* Accessibility — per-user preferences. */}
+      <div className="cc-form">
+        <h3>{t("accessibility")}</h3>
+        <label className="cc-check">
+          <input
+            type="checkbox"
+            checked={!!user.dyslexiaFont}
+            onChange={(e) => updateProfile({ dyslexiaFont: e.target.checked })}
+          />
+          {t("dyslexiaFont")}
+        </label>
+      </div>
+
       <form className="cc-form" onSubmit={saveName}>
         <h3>{t("profile")}</h3>
         <label className="cc-muted">{t("displayName")}</label>

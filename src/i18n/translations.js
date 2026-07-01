@@ -38,6 +38,7 @@ export const translations = {
     changePassword: "Change password", newPassword: "New password",
     confirmPassword: "Confirm new password", updatePassword: "Update password",
     session: "Session", administrator: "Administrator", member: "Member", viewer: "Viewer",
+    accessibility: "Accessibility", dyslexiaFont: "Dyslexia-friendly font",
   },
   es: {
     home: "Inicio", help: "Ayuda", myAccount: "Mi cuenta", settings: "Configuración", accounts: "Cuentas",
