@@ -213,6 +213,10 @@ html.cc-text-larger { font-size: 131.25%; }
 .cc-dir-photo { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; flex-shrink: 0; border: 1px solid var(--cc-border); }
 .cc-photo-row { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; }
 .cc-photo-row input[type="file"] { font-size: 0.85rem; }
+.cc-dir-card .cc-dir-person { align-items: flex-start; width: 100%; }
+.cc-dir-details { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 0.15rem 1rem; margin-top: 0.5rem; }
+.cc-dir-detail { display: flex; gap: 0.4rem; font-size: 0.88rem; }
+.cc-dir-label { color: var(--cc-muted); min-width: 6.5rem; }
 
 /* Meals / potluck */
 .cc-meal { flex-direction: column; align-items: stretch; }

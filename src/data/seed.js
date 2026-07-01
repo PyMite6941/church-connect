@@ -19,7 +19,12 @@ export function seedFor(name) {
       ];
     case "directory":
       return [
-        { id: uid(), name: "Maria Lopez", role: "Worship", email: "maria@grace.org" },
+        {
+          id: uid(), name: "Maria Lopez", role: "Worship", email: "maria@grace.org",
+          phone: "(555) 123-4567", birthday: "1990-04-12", anniversary: "2015-06-20",
+          household: "Married to Carlos; kids Ana & Leo", address: "12 Oak St, Springfield",
+          joined: "2016-09-01", baptized: "2016-11-13", notes: "",
+        },
       ];
     case "leadership":
       return [
