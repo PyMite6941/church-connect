@@ -5,6 +5,7 @@ import { useSettings } from "../context/SettingsContext";
 import { useI18n } from "../context/LanguageContext";
 import { getActiveChannels } from "../features/channels";
 import ReadAloud from "./ReadAloud";
+import EventAutoPrune from "./EventAutoPrune";
 
 export default function Layout({ children }) {
   const tenant = useTenant();
@@ -16,6 +17,7 @@ export default function Layout({ children }) {
 
   return (
     <div className="cc-app">
+      <EventAutoPrune />
       <a href="#cc-main" className="cc-skip">{t("skipToContent")}</a>
       <header className="cc-header">
         <div className="cc-brand">
