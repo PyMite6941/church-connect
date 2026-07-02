@@ -31,7 +31,16 @@ const CONTRIBUTORS = [
 export const FEATURES = {
   events: {
     label: "Events", icon: "📅", component: Events,
-    options: [{ key: "sort", label: "Order events by", choices: SORT_DATE, default: "soonest" }],
+    options: [
+      { key: "sort", label: "Order events by", choices: SORT_DATE, default: "soonest" },
+      {
+        key: "pastEvents", label: "Past events", default: "keep",
+        choices: [
+          { value: "keep", label: "Keep them" },
+          { value: "delete", label: "Auto-delete when past" },
+        ],
+      },
+    ],
     // Who may ADD events — a role category, or specific selected people.
     permission: { label: "Who can add events", default: { mode: "role", role: "admins" } },
   },

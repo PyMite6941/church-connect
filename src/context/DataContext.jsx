@@ -57,6 +57,8 @@ export function useCollection(name) {
   const update = (id, patch) =>
     persist(name, (items || []).map((it) => (it.id === id ? { ...it, ...patch } : it)));
   const remove = (id) => persist(name, (items || []).filter((it) => it.id !== id));
+  // Bulk replace — one write (safe for pruning many items at once).
+  const replaceAll = (next) => persist(name, next);
 
-  return { items: items || [], loading: items === undefined, add, update, remove };
+  return { items: items || [], loading: items === undefined, add, update, remove, replaceAll };
 }

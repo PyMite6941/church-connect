@@ -1,16 +1,26 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useCollection } from "../context/DataContext";
 import { useAuth } from "../context/AuthContext";
 import { useFeatureOption, useFeaturePermission } from "../context/SettingsContext";
 import SectionWatchers from "../components/SectionWatchers";
 
 export default function Events() {
-  const { items, loading, add, remove } = useCollection("events");
+  const { items, loading, add, remove, replaceAll } = useCollection("events");
   const { isAdmin, canByPermission } = useAuth();
   const sort = useFeatureOption("events", "sort", "soonest");
+  const pastEvents = useFeatureOption("events", "pastEvents", "keep");
   const addPerm = useFeaturePermission("events", { mode: "role", role: "admins" });
   const canAdd = canByPermission(addPerm);
   const [form, setForm] = useState({ title: "", date: "", time: "", location: "" });
+
+  // Auto-delete past events when enabled. Runs once cleanup is possible (admins,
+  // so a random viewer never mutates shared data); today's events are kept.
+  useEffect(() => {
+    if (pastEvents !== "delete" || !isAdmin || loading) return;
+    const today = new Date().toISOString().slice(0, 10);
+    const kept = items.filter((ev) => !(ev.date && ev.date < today));
+    if (kept.length !== items.length) replaceAll(kept);
+  }, [pastEvents, isAdmin, loading, items, replaceAll]);
 
   if (loading) return <p className="cc-muted">Loading events…</p>;
 
