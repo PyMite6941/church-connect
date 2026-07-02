@@ -2,12 +2,20 @@
 // in the active adapter, so real data is never overwritten.
 const uid = () => Math.random().toString(36).slice(2, 9);
 
+// Dates relative to the viewer's "today" (yyyy-mm-dd), so demo events always
+// look upcoming and don't get auto-deleted for being in the past.
+const dayOffset = (n) => {
+  const d = new Date();
+  d.setDate(d.getDate() + n);
+  return d.toISOString().slice(0, 10);
+};
+
 export function seedFor(name) {
   switch (name) {
     case "events":
       return [
-        { id: uid(), title: "Sunday Service", date: "2026-06-28", time: "10:00", location: "Main Hall" },
-        { id: uid(), title: "Youth Group", date: "2026-07-03", time: "18:30", location: "Annex B" },
+        { id: uid(), title: "Sunday Service", date: dayOffset(3), time: "10:00", location: "Main Hall" },
+        { id: uid(), title: "Youth Group", date: dayOffset(6), time: "18:30", location: "Annex B" },
       ];
     case "announcements":
       return [
@@ -33,7 +41,7 @@ export function seedFor(name) {
       ];
     case "sermons":
       return [
-        { id: uid(), title: "The Good Shepherd", speaker: "Pastor Dan", date: "2026-06-21", link: "" },
+        { id: uid(), title: "The Good Shepherd", speaker: "Pastor Dan", date: dayOffset(-7), link: "" },
       ];
     case "groups":
       return [
@@ -44,7 +52,7 @@ export function seedFor(name) {
         {
           id: uid(),
           title: "Sunday Potluck",
-          date: "2026-07-05",
+          date: dayOffset(5),
           location: "Fellowship Hall",
           signups: [{ name: "Maria Lopez", dish: "Green salad" }],
         },
